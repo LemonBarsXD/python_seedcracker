@@ -12,6 +12,7 @@ for i in range(0, a):
     print(i+1, end="")
     uinput.append(int(input(": ")))
 
+# magic
 print("\nProgress is in percent")
 for i in range(0, SEARCH_DEPTH):
     random.seed(i)
