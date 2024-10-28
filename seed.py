@@ -1,7 +1,7 @@
 import random
 
 SEARCH_DEPTH = 0xFFFFFF           # Amount of seeds to search.
-MAX_RANINT = 0x7FFF               # Max RNG value.
+MAX_RANINT = 0x7FF               # Max RNG value.
 uinput = []                       # User input
 
 a = int(input("Amount: "))
