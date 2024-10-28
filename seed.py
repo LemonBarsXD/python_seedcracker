@@ -1,28 +1,28 @@
 import random
 
-SEARCH_DEPTH = 0xFFFFFF         # Amount of seeds to search. Will also be used to get progress in %.
-MAX_RANINT = 0x7FFF             # This variable will change the max rng value.
-uinput = []                     # User input
-buffer = []
+SEARCH_DEPTH = 0xFFFFFF           # Amount of seeds to search.
+MAX_RANINT = 0x7FFF               # Max RNG value.
+uinput = []                       # User input
 
-#    Amount of inputs    #
 a = int(input("Amount: "))
-# ---------------------- #
 
-for i in range(0, a):
-    print(i+1, end="")
-    uinput.append(int(input(": ")))
+uinput = [int(input(f"{i + 1}: ")) for i in range(a)]
 
+print(f"\nUser input: {uinput} \nSearch depth: {SEARCH_DEPTH} \nMax RNG value: {MAX_RANINT}")      # Debug info
+print("\nProgress is in percent")
 
-print(f"\nUser input: {uinput} \nSearch depth: {SEARCH_DEPTH} \nMax RNG value: {MAX_RANINT}")      # Debug, remove if you want
-print("\nProgress is in percent")                                                                  # --||--
+# Convert uinput to a tuple for faster comparisons
+uinput_tuple = tuple(uinput)
 
-for i in range(0, SEARCH_DEPTH):
+for i in range(SEARCH_DEPTH):
     random.seed(i)
-    for j in range(0, a):
-        buffer.append(random.randint(0, MAX_RANINT))
-    if uinput == buffer:
-        print(uinput, buffer, "Seed:", i)
-    else:
-        buffer.clear()
-        print(round((i/SEARCH_DEPTH)*100, 1), end="\r ") 
+    
+    generated = tuple(random.randint(0, MAX_RANINT) for _ in range(a))
+    
+    if generated == uinput_tuple:
+        print(uinput, generated, "Seed:", i)
+        break
+    
+    # print progress without clearing buffer
+    if i % (SEARCH_DEPTH // 1000) == 0:  # print progress every 0.1%
+        print(f"{round((i / SEARCH_DEPTH) * 100, 1)}%", end="\r")
